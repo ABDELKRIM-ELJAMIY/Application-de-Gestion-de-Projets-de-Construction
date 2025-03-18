@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Calendar, DollarSign, Edit, Plus, Trash2 } from 'lucide-react';
+import { Calendar, DollarSign, Edit, Eye, Trash2 } from 'lucide-react';
 
 const Home = () => {
   
@@ -66,7 +66,7 @@ const Home = () => {
           to="/add-project"
           className="bg-[#dc4048] hover:bg-[#f6821f] text-white py-2 px-4 rounded-lg transition-colors duration-200 flex items-center gap-2"
         >
-          <Plus size={18} />
+          <Eye size={18} />
           New Project
         </Link>
       </div>
@@ -94,12 +94,15 @@ const Home = () => {
 
             <div className="mt-6 flex flex-wrap gap-3">
               <Link
-              
+                // to={`/tasks/${project.id}`}  
+                to={`/tasks/`}  
+
                 className="bg-[#7acdf1] hover:bg-[#5ba6d8] text-white py-2 px-3 rounded-md transition-colors duration-200 flex items-center gap-1 text-sm"
               >
-                <Plus size={16} />
-                Add Task
+                <Eye size={16} />
+                View Tasks
               </Link>
+
               <Link
               
                 className="bg-[#feb913] hover:bg-[#f6821f] text-white py-2 px-3 rounded-md transition-colors duration-200 flex items-center gap-1 text-sm"
