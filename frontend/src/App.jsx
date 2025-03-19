@@ -10,6 +10,7 @@ import ResourcesList from "./pages/ResourcesList";
 import Tasks from "./pages/Tasks";
 // import Projects from "./pages/Projects";
 import TaskResources from "./pages/TaskResources";
+import AddResource from "./pages/AddResource";
 
 function App() {
   return (
@@ -19,12 +20,13 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/projects/add" element={<AddProject />} />
         <Route path="/tasks/add" element={<AddTask />} />
-        <Route path="/projects/edit/:id" element={<EditProject />} />
-        <Route path="/resources/edit/:id" element={<EditResource />} />
-        <Route path="/tasks/edit/:id" element={<EditTask />} />
+        <Route path="/projects/edit" element={<EditProject />} />
+        <Route path="/resources/edit" element={<EditResource />} />
+        <Route path="/tasks/edit" element={<EditTask />} />
         <Route path="/resources" element={<ResourcesList />} />
+        <Route path="/resources/add" element={<AddResource />} />
         <Route path="/tasks" element={<Tasks />} />
-        <Route path="/task-resources" element={<TaskResources />} />
+        {/* <Route path="/taskresources" element={<TaskResources />} /> */}
       </Routes>
     </Router>
   );

@@ -8,7 +8,7 @@ const NavBar = () => {
 
     return (
         <div className="px-4 py-3">
-            <nav className="bg-[#003f6b] text-white py-5 px-6 shadow-xl rounded-lg border-t-4 border-[#feb913]">
+            <nav className="bg-[#003f6b] text-white py-5 px-6 shadow-xl rounded-lg border-t-4 ">
                 <div className="container mx-auto flex justify-between items-center">
                     <Link to="/" className="text-2xl font-extrabold tracking-tight flex items-center gap-2 group">
                         <FaHardHat className="text-[#feb913] group-hover:text-[#7acdf1] transition-colors duration-300" size={30} />
