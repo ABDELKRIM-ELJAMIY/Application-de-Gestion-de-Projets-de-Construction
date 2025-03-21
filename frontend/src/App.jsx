@@ -9,7 +9,7 @@ import EditTask from "./pages/EditTask";
 import ResourcesList from "./pages/ResourcesList";
 import Tasks from "./pages/Tasks";
 // import Projects from "./pages/Projects";
-import TaskResources from "./pages/TaskResources";
+// import TaskResources from "./pages/TaskResources";
 import AddResource from "./pages/AddResource";
 
 function App() {

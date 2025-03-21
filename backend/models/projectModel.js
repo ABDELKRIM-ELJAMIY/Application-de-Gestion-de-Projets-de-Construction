@@ -16,7 +16,9 @@ const projectSchema = new mongoose.Schema({
     dateFin: {
         type: Date,
         required: true
-    }
+    },
+    budget: {
+        type: Number, required: true}
 });
 
 const Projects = mongoose.model('Projects', projectSchema);

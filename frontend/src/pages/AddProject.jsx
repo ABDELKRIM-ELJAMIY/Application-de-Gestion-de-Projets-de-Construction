@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-
+import axios from 'axios';
 
 const validationSchema = Yup.object({
   name: Yup.string().required('Project name is required'),
@@ -17,12 +17,29 @@ const validationSchema = Yup.object({
 const AddProject = () => {
   const navigate = useNavigate();
 
-  const handleSubmit = (values) => {
-    
-    console.log(values);
+  const handleSubmit = async (values, { setSubmitting }) => {
+    const formattedValues = {
+      nom: values.name, 
+      description: values.description,
+      dateDebut: values.startDate,  
+      dateFin: values.endDate,  
+      budget: Number(values.budget)
+    };
 
-    navigate('/projects');
+    try {
+      const response = await axios.post('http://localhost:8080/api/projects', formattedValues, {
+        headers: { 'Content-Type': 'application/json' }
+      });
+      console.log("Response:", response.data);
+      navigate('/'); 
+    } catch (err) {
+      console.error('Failed to create project', err.response?.data || err);
+    } finally {
+      setSubmitting(false);
+    }
   };
+
+
 
   return (
     <div className="container mx-auto p-6">
@@ -39,7 +56,7 @@ const AddProject = () => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ errors, touched }) => (
+        {({ isSubmitting }) => (
           <Form className="bg-white p-6 rounded-lg shadow-lg">
             <div className="mb-4">
               <label htmlFor="name" className="block text-sm font-semibold text-[#003f6b]">Project Name</label>
@@ -69,7 +86,7 @@ const AddProject = () => {
                 <label htmlFor="startDate" className="block text-sm font-semibold text-[#003f6b]">Start Date</label>
                 <Field
                   type="date"
-                  id="startDate" 
+                  id="startDate"
                   name="startDate"
                   className="w-full p-3 mt-2 border rounded-lg border-[#dc4048] focus:outline-none focus:ring-2 focus:ring-[#dc4048]"
                 />
@@ -93,6 +110,7 @@ const AddProject = () => {
               <Field
                 type="number"
                 id="budget"
+                min="0"
                 name="budget"
                 className="w-full p-3 mt-2 border rounded-lg border-[#dc4048] focus:outline-none focus:ring-2 focus:ring-[#dc4048]"
               />
@@ -101,10 +119,11 @@ const AddProject = () => {
 
             <button
               type="submit"
-              
-              className="bg-[#dc4048] hover:bg-[#f6821f] text-white py-2 px-4 rounded-lg transition-colors duration-200 mt-6 w-full"
+              disabled={isSubmitting}
+              className={`${isSubmitting ? 'bg-gray-400' : 'bg-[#dc4048] hover:bg-[#f6821f]'
+                } text-white py-2 px-4 rounded-lg transition-colors duration-200 mt-6 w-full`}
             >
-              Save Project
+              {isSubmitting ? 'Saving...' : 'Save Project'}
             </button>
           </Form>
         )}
