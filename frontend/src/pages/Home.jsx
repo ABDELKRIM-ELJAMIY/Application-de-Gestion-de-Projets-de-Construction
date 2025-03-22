@@ -61,12 +61,13 @@ const Home = () => {
 
             <div className="mt-6 flex flex-wrap gap-3">
               <Link
-                to={`/tasks/`}
-                className="bg-[#7acdf1] hover:bg-[#5ba6d8] text-white py-2 px-3 rounded-md transition-colors duration-200 flex items-center gap-1 text-sm"
-              >
+                to={`/project/${project._id}/tasks`}
+                className="bg-[#7acdf1] hover:bg-[#5ba6d8] text-white py-2 px-3 rounded-md transition-colors duration-200 flex items-center gap-1 text-sm">
                 <Eye size={16} />
                 Voir les Tâches
               </Link>
+
+
 
               <Link
                 to={`/projects/edit/${project._id}`}

@@ -19,13 +19,14 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/projects/add" element={<AddProject />} />
-        <Route path="/tasks/add" element={<AddTask />} />
-        <Route path="/projects/edit" element={<EditProject />} />
+        <Route path="/tasks/add/:projectId" element={<AddTask />} />
+        <Route path="/projects/edit/:id" element={<EditProject />} />
         <Route path="/resources/edit" element={<EditResource />} />
         <Route path="/tasks/edit" element={<EditTask />} />
         <Route path="/resources" element={<ResourcesList />} />
         <Route path="/resources/add" element={<AddResource />} />
-        <Route path="/tasks" element={<Tasks />} />
+        <Route path="/project/:projectId/tasks" element={<Tasks />} />
+        {/* <Route path="/tasks/add/:projectId" element={<AddTask />} /> */}
         {/* <Route path="/taskresources" element={<TaskResources />} /> */}
       </Routes>
     </Router>
