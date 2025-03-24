@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const projectRoutes = require('./routes/projects');
 const  tasksRoutes = require('./routes/tasks.js');
+const resourceRoutes = require('./routes/resources.js');
 
 const { connectDB } = require('./db.js');
 
@@ -17,6 +18,7 @@ connectDB();
 
 app.use('/api/projects', projectRoutes);
 app.use('/api/tasks', tasksRoutes);
+app.use('/api/resources', resourceRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
