@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import axios from 'axios';
 
 const validationSchema = Yup.object({
   name: Yup.string().required('Le nom de la ressource est requis'),
@@ -12,22 +13,22 @@ const validationSchema = Yup.object({
 
 const AddResource = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
 
-  const handleSubmit = (values) => {
-    console.log(values);
-    navigate('/resources');
+  const handleSubmit = async (values) => {
+    try {
+      await axios.post(`http://localhost:8080/api/resources/${id}`, values);
+      navigate(`/resources/task/${id}`);
+    } catch (error) {
+      console.error('Erreur lors de l’ajout de la ressource :', error);
+    }
   };
 
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-3xl font-bold text-[#003f6b] mb-6">Ajouter une Ressource</h1>
       <Formik
-        initialValues={{
-          name: '',
-          type: '',
-          quantity: '',
-          supplier: '',
-        }}
+        initialValues={{ name: '', type: '', quantity: 0, supplier: '' }}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >

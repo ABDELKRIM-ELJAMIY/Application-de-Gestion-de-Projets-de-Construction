@@ -64,8 +64,6 @@ exports.createResource = async (req, res) => {
 };
 
 
-
-
 exports.deleteResource = async (req, res) => {
     try {
         const { taskId, resourceId } = req.params; 

@@ -25,7 +25,7 @@ const EditProject = () => {
     budget: '',
   });
 
-  // Charger les données du projet
+
   useEffect(() => {
     const fetchProject = async () => {
       try {

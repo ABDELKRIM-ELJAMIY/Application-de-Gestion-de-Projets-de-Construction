@@ -8,8 +8,6 @@ import EditResource from "./pages/EditResource";
 import EditTask from "./pages/EditTask";
 import ResourcesList from "./pages/ResourcesList";
 import Tasks from "./pages/Tasks";
-// import Projects from "./pages/Projects";
-// import TaskResources from "./pages/TaskResources";
 import AddResource from "./pages/AddResource";
 
 function App() {
@@ -21,13 +19,12 @@ function App() {
         <Route path="/projects/add" element={<AddProject />} />
         <Route path="/tasks/add/:projectId" element={<AddTask />} />
         <Route path="/projects/edit/:id" element={<EditProject />} />
-        <Route path="/resources/edit" element={<EditResource />} />
-        <Route path="/tasks/edit" element={<EditTask />} />
-        <Route path="/resources" element={<ResourcesList />} />
-        <Route path="/resources/add" element={<AddResource />} />
+        <Route path="/tasks/edit/:id" element={<EditTask />} />
+        <Route path="/resources/task/:taskId" element={<ResourcesList />} />
+        <Route path="/resources/add/:id" element={<AddResource />} />
+        {/* <Route path="/resources/edit/:resourceId" element={<EditResource />} /> */}
+        <Route path="/resources/edit/:taskId/:resourceId" element={<EditResource />} />
         <Route path="/project/:projectId/tasks" element={<Tasks />} />
-        {/* <Route path="/tasks/add/:projectId" element={<AddTask />} /> */}
-        {/* <Route path="/taskresources" element={<TaskResources />} /> */}
       </Routes>
     </Router>
   );

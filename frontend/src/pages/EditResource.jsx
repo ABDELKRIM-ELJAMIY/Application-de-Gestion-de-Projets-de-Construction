@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
@@ -14,25 +15,54 @@ const validationSchema = Yup.object({
 
 const EditResource = () => {
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { taskId, resourceId } = useParams();
+  const [initialValues, setInitialValues] = useState({
+    name: '',
+    type: '',
+    quantity: '',
+    supplier: '',
+  });
 
-  const initialValues = {
-    name: 'Ressource Exemple',
-    type: 'Matériau',
-    quantity: 10,
-    supplier: 'Fournisseur A',
-  };
+  useEffect(() => {
+    if (!taskId || !resourceId) {
+      console.error("Missing taskId or resourceId");
+      return;
+    }
+
+    axios.get(`http://localhost:8080/api/resources/task/${taskId}`)
+      .then(response => {
+        const resource = response.data.find(res => res._id === resourceId);
+        if (resource) {
+          setInitialValues({
+            name: resource.name,
+            type: resource.type,
+            quantity: resource.quantity,
+            supplier: resource.supplier,
+          });
+        }
+      })
+      .catch(error => console.error('Erreur lors de la récupération de la ressource :', error));
+  }, [taskId, resourceId]);
+
+
+
 
   const handleSubmit = (values) => {
-    console.log('Ressource mise à jour :', values);
-    navigate('/resources');
+    axios
+      .put(`http://localhost:8080/api/resources/${taskId}/${resourceId}`, values)
+      .then(() => {
+        console.log('✅ Ressource mise à jour avec succès:', values);
+        navigate(`/resources/task/${taskId}`); 
+      })
+      .catch((error) => console.error('Erreur lors de la mise à jour de la ressource :', error));
   };
+
 
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-3xl font-bold text-[#003f6b] mb-6">Modifier la Ressource</h1>
-      <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
-        {({ errors, touched }) => (
+      <Formik initialValues={initialValues} enableReinitialize validationSchema={validationSchema} onSubmit={handleSubmit}>
+        {({ isSubmitting }) => (
           <Form className="bg-white p-6 rounded-lg shadow-lg">
             <div className="mb-4">
               <label htmlFor="name" className="block text-sm font-semibold text-[#003f6b]">Nom</label>
@@ -58,8 +88,8 @@ const EditResource = () => {
               <ErrorMessage name="supplier" component="div" className="text-red-500 text-xs mt-1" />
             </div>
 
-            <button type="submit" className="bg-[#dc4048] hover:bg-[#f6821f] text-white py-2 px-4 rounded-lg w-full">
-              Enregistrer les modifications
+            <button type="submit" disabled={isSubmitting} className="bg-[#dc4048] hover:bg-[#f6821f] text-white py-2 px-4 rounded-lg w-full">
+              {isSubmitting ? 'Enregistrement...' : 'Enregistrer les modifications'}
             </button>
           </Form>
         )}
